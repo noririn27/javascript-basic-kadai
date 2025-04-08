@@ -32,7 +32,7 @@
                 </div>
             </div>
             <!-- エラーメッセージ -->
-            <span id="errors" class="hidden text-danger"></span>
+            <span id="error" class="hidden text-danger"></span>
         </div>
 
         <!-- ボタン -->
@@ -64,12 +64,12 @@
 
             // 入力フォームの値をチェック
             if (minutes < 0 || seconds < 0) {
-                document.getElementById('errors').innerText = "マイナスは入力できません";
-                document.getElementById('errors').classList.remove('hidden');
+                document.getElementById('error').innerText = "マイナスは入力できません";
+                document.getElementById('error').classList.remove('hidden');
                 return;
             }
 
-            document.getElementById('errors').classList.add('hidden');
+            document.getElementById('error').classList.add('hidden');
             document.getElementById('timer').innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
 
@@ -79,6 +79,7 @@
             let seconds = document.getElementById('seconds').value || 0;
             let timeLeft = (minutes * 60) + parseInt(seconds);
             setMode("progress");
+            isPaused = false;
             countdownInterval = setInterval(() => {
                 if(!isPaused) {
                     timeLeft--;
@@ -113,7 +114,6 @@
             clearInterval(countdownInterval);
             updateTimer();
             setMode("restart");
-            isPaused = null;
             console.log(isPaused);
         }
 
