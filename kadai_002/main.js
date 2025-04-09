@@ -4,6 +4,10 @@
 let untyped = '';
 let typed = '';
 let score = 0;
+let totalTime = 70;
+let time = 0;
+let minutes = 0;
+let seconds = 0;
 
 // HTML要素の取得
 const untypedfield = document.getElementById('untyped');
@@ -73,6 +77,7 @@ const keyPress = e => {
   }
 }
 
+
 // function ランク判定の関数
 const rankCheck = score => {
   let text = '';
@@ -91,23 +96,28 @@ const rankCheck = score => {
 // function ゲームを終了する関数
 const gameOver = id => {
   clearInterval(id);
-  console.log('終了');
-  const result = confirm(rankCheck(score));
+  typedfield.textContent = "";
+  untypedfield.textContent = 'タイムアップ！';
 
-  // コンファームでOKされたとき→画面をリロード
-  if(result === true) {
-    window.location.reload();
-  }
+  setTimeout(() => {
+    const result = confirm(rankCheck(score));
+    if (result === true) { // コンファームでOKされたとき→画面をリロード
+      window.location.reload();
+    }
+  }, 10);
 };
+
 
 // function カウントダウンタイマーの関数
 const timer = () => {
-  let time = count.textContent; //初期値60はhtmlに書いており、それを取得してtime変数に格納
-
+  
   // スタート
   const id = setInterval(() => {
     time--;
-    count.textContent = time;
+    console.log(time);
+    minutes = String(Math.floor(time / 60));
+    seconds = String(time % 60).padStart(2, 0);
+    count.textContent = `${minutes}:${seconds}`;
 
     // ストップ
     if (time <= 0) {
@@ -116,6 +126,10 @@ const timer = () => {
   }, 1000);
 };
 
+time = totalTime;
+minutes = String(Math.floor(totalTime / 60));
+seconds = String(totalTime % 60).padStart(2, 0);
+count.textContent = `${minutes}:${seconds}`;
 
 // スタートボタンをクリックしたら
 start.addEventListener('click', () => {
