@@ -7,7 +7,7 @@ for (i = 0; i <= holidays.length - 1; i++) {
 console.log('=====================')
 
 let x = 0;
-while (x !== holidays.length) {
+while (x < holidays.length) {
   console.log(holidays[x]);
   x++;
 }
